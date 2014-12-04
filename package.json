@@ -1,14 +1,10 @@
 {
   "name": "elephas",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Some added sugar on top of express to give our our some sensible defaults and a little structure.",
   "main": "elephas.js",
   "scripts": {
     "test": "jest"
-  },
-  "repository": {
-    "type": "git",
-    "url": "ssh://git@git.bigdatr.com:7999/bd/elephas.git"
   },
   "author": "atridge.dcosta@bigdatr.com",
   "license": "BSD",
@@ -44,5 +40,16 @@
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react"
     ]
-  }
+  },
+  "keywords": [
+    "express"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bigdatr/elephas.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bigdatr/elephas/issues"
+  },
+  "homepage": "https://github.com/bigdatr/elephas"
 }
