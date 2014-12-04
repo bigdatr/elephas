@@ -32,6 +32,18 @@ app.createServer();
 ...
 
 
+##Logging
+A winston logger.
+
+```js
+var logger = require('elephas/lib/logger');
+
+logger.info('Info message');
+logger.warn('Warning message');
+logger.error('Error message');
+
+```
+
 ## Testing
 
 ```js
