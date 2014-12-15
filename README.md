@@ -23,10 +23,10 @@ elephas.createServer();
 
 ```
 
-###Options
+##Options
 ...
 
-###Hooks
+##Hooks
 Using the following hooks, you can jump in between each stage of the boot process to run your own code. You **MUST** execute the `done()` callback so that the boot process can continue. All hooks are optional.
 
 ```js
@@ -44,7 +44,7 @@ elephas.createServer({
 * beforeServices
 * beforeMiddleware
 * beforeRoutes
-* beforeStartServer
+* afterRoutes
 * onComplete
 
 
