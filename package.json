@@ -11,6 +11,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "body-parser": "^1.9.0",
+    "chalk": "^0.5.1",
     "compression": "^1.2.0",
     "connect-redis": "^2.1.0",
     "connect-timeout": "^1.4.0",
@@ -19,7 +20,6 @@
     "express": "^4.9.7",
     "express-flash": "0.0.2",
     "express-session": "^1.8.2",
-    "express-winston": "^0.2.8",
     "helmet": "^0.4.1",
     "kafka-node": "^0.2.11",
     "lodash": "^2.4.1",
