@@ -24,7 +24,7 @@
     "kafka-node": "^0.2.14",
     "lodash": "^2.4.1",
     "moment": "^2.8.4",
-    "multer": "^0.1.6",
+    "multer": "^0.1.7",
     "node-statsd": "^0.1.1",
     "recursive-readdir": "^1.2.0",
     "winston": "^0.8.3",
