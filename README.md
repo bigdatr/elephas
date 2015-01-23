@@ -1,4 +1,4 @@
-elephas
+elephas [![Build Status](https://travis-ci.org/bigdatr/elephas.svg?branch=master)](https://travis-ci.org/bigdatr/elephas)
 =======================
 
 Some added sugar on top of express to give our app some sensible defaults and a little structure.
