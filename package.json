@@ -31,7 +31,8 @@
     "winston-kafka-transport": "^0.1.4"
   },
   "devDependencies": {
-    "jest": "^0.1.39"
+    "jest": "^0.1.39",
+    "jest-cli": "^0.4.0"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/preprocessor.js",
