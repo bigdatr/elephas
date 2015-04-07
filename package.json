@@ -21,14 +21,13 @@
     "express-flash": "0.0.2",
     "express-session": "^1.10.4",
     "helmet": "^0.7.1",
-    "kafka-node": "^0.2.24",
     "lodash": "^3.6.0",
     "moment": "^2.9.0",
     "multer": "^0.1.8",
     "node-statsd": "^0.1.1",
     "recursive-readdir": "^1.2.1",
     "winston": "^0.9.0",
-    "winston-kafka-transport": "^0.1.5"
+    "winston-kafka-transport": "^0.1.6"
   },
   "devDependencies": {
     "jest": "^0.1.39",
