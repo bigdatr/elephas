@@ -13,9 +13,12 @@ npm install elephas --save
 
 ```js
 var config = {
+	__dirname: __dirname,
     server: {
-        port: 3000
-    }
+        port: 3000,
+        cluster: false
+    },
+    httpsOnly: false
 };
 
 var elephas = require('elephas')(config);
