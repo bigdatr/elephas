@@ -24,7 +24,9 @@
     "moment": "^2.10.6",
     "multer": "^0.1.8",
     "node-statsd": "^0.1.1",
+    "primus": "^4.0.1",
     "recursive-readdir": "^1.2.1",
+    "sockjs": "^0.3.15",
     "winston": "^1.1.1"
   },
   "devDependencies": {
