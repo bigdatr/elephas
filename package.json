@@ -20,8 +20,6 @@
     "express-flash": "0.0.2",
     "express-session": "^1.11.2",
     "helmet": "^0.13.0",
-    "lodash": "^3.9.3",
-    "moment": "^2.10.6",
     "multer": "^0.1.8",
     "node-statsd": "^0.1.1",
     "primus": "^4.0.1",
@@ -30,14 +28,10 @@
     "winston": "^1.1.1"
   },
   "devDependencies": {
-    "jest": "^0.1.40",
-    "jest-cli": "^0.4.5"
+
   },
-  "jest": {
-    "scriptPreprocessor": "<rootDir>/preprocessor.js",
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react"
-    ]
+  "peerDependencies": {
+    "lodash": ">=3.9.3"
   },
   "keywords": [
     "express"
