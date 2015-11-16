@@ -1,4 +1,4 @@
-elephas [![Circle CI](https://circleci.com/gh/bigdatr/elephas.svg?style=svg)](https://circleci.com/gh/bigdatr/elephas)
+elephas [![Circle CI](https://circleci.com/gh/bigdatr/elephas.svg?style=svg)](https://circleci.com/gh/bigdatr/elephas) [![Coverage Status](https://coveralls.io/repos/bigdatr/elephas/badge.svg?branch=master&service=github)](https://coveralls.io/github/bigdatr/elephas?branch=master)
 =======================
 
 Some added sugar on top of express to give our app some sensible defaults and a little structure.
