@@ -4,3 +4,6 @@ machine:
 dependencies:
   pre:
     - npm install npm -g
+test:
+  post:
+    - grunt test:coveralls

@@ -68,7 +68,10 @@ module.exports = function(grunt){
     });
     grunt.loadNpmTasks('grunt-mocha-istanbul');
     grunt.loadNpmTasks('grunt-coveralls');
+
     grunt.registerTask('test', ['mocha_istanbul:coverage']);
+    grunt.registerTask('test:coveralls', ['coveralls:post_lcov']);
+
 };
 
 
