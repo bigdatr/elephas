@@ -31,8 +31,8 @@
     "winston": "^1.1.1"
   },
   "peerDependencies": {
-    "lodash": "^3.10.1",
-    "express": "^4.13.3"
+    "lodash": ">=3.10.1",
+    "express": ">=4.13.3"
   },
   "devDependencies": {
     "babel": "^5.8.34",
