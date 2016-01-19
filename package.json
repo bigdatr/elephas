@@ -23,6 +23,7 @@
     "express-session": "^1.12.1",
     "helmet": "^0.13.0",
     "lodash": "^3.10.1",
+    "mkdirp": "^0.5.1",
     "multer": "^0.1.8",
     "node-statsd": "^0.1.1",
     "primus": "^4.0.1",
