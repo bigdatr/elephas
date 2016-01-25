@@ -18,7 +18,7 @@ var config = {
         port: 3000,
         cluster: false
     },
-    httpsOnly: false
+    httpsOnly: process.env.NODE_ENV === 'production'
 };
 
 var elephas = require('elephas')(config);
@@ -49,20 +49,6 @@ elephas.createServer({
 * beforeRoutes
 * afterRoutes
 * onComplete
-
-
-
-##Logging
-A winston logger.
-
-```js
-var logger = require('elephas/lib/logger');
-
-logger.info('Info message');
-logger.warn('Warning message');
-logger.error('Error message');
-
-```
 
 ## Testing
 
