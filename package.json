@@ -1,6 +1,6 @@
 {
   "name": "elephas",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Some added sugar on top of express to give our our some sensible defaults and a little structure.",
   "main": "elephas.js",
   "scripts": {
