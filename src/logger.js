@@ -1,5 +1,3 @@
-'use strict';
-
 var winston = require('winston');
 
 var levels = {
@@ -16,7 +14,7 @@ var levels = {
     failed: 1,
     success: 1,
     warning: 1
-};
+}
 
 var colors = {
     info: 'grey',
@@ -27,15 +25,15 @@ var colors = {
     success: 'green',
     failed: 'red',
     query: 'magenta'
-};
+}
 
-var logger = new winston.Logger({
+var logger = new (winston.Logger)({
     levels: levels,
     colors: colors
 });
 
 logger.add(winston.transports.Console, {
-    timestamp: true,
+    timestamp: true, 
     colorize: true,
     prettyPrint: true
 });

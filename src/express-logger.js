@@ -1,5 +1,3 @@
-'use strict';
-
 var logger = require('./logger');
 var chalk = require('chalk');
 var statsd = require('./statsd');
@@ -8,7 +6,8 @@ var cluster = require('cluster');
 function _calcLogLevel(statusCode) {
     if (statusCode >= 500) {
         return 'error';
-    } else if (statusCode >= 400) {
+    }
+    else if (statusCode >= 400) {
         return 'warning';
     }
 
@@ -20,9 +19,11 @@ function _formatStatus(statusCode) {
 
     if (statusCode >= 500) {
         color = 'red';
-    } else if (statusCode >= 400) {
+    }
+    else if (statusCode >= 400) {
         color = 'yellow';
-    } else if (statusCode >= 300) {
+    }
+    else if (statusCode >= 300) {
         color = 'cyan';
     }
 
@@ -34,9 +35,11 @@ function _formatResponseTime(ms) {
 
     if (ms >= 500) {
         color = 'red';
-    } else if (ms >= 300) {
+    }
+    else if (ms >= 300) {
         color = 'magenta';
-    } else if (ms >= 100) {
+    }
+    else if (ms >= 100) {
         color = 'yellow';
     }
 
@@ -56,32 +59,40 @@ function _log(req, res, responseTime) {
 
     if (req && req.user && req.user.username) {
         user = chalk.gray(req.user.username);
-    } else if (req && req.session && req.session.passport && req.session.passport.user) {
+    }
+    else if (req && req.session && req.session.passport && req.session.passport.user) {
         user = chalk.gray(req.session.passport.user);
-    } else {
+    }
+    else {
         user = chalk.red('anonymous');
     }
 
-    var msg = [chalk.gray(req.method), _formatStatus(res.statusCode), _formatResponseTime(responseTime), req.originalUrl, user].
-    // chalk.gray('pid=' + pid)
-    join(' ');
+    var msg = [
+        chalk.gray(req.method),
+        _formatStatus(res.statusCode),
+        _formatResponseTime(responseTime),
+        req.originalUrl,
+        user,
+        // chalk.gray('pid=' + pid)
+    ].join(' ');
 
     logger[level](msg, _heapDump);
 
     statsd.timing('api.response_time', responseTime);
 }
 
-process.on('uncaughtException', function (err) {
+process.on('uncaughtException', function(err) {
     logger.error(err.stack);
 });
 
-module.exports.logger = function (req, res, next) {
+
+module.exports.logger = function(req, res, next) {
     var _start = new Date();
 
     // I feel really disgusted doing this. Can't waith to switch to Koa...
     var end = res.end;
-    res.end = function (chunk, encoding) {
-        var responseTime = new Date() - _start;
+    res.end = function(chunk, encoding) {
+        var responseTime = (new Date() - _start);
 
         res.end = end;
         res.end(chunk, encoding);
@@ -92,13 +103,13 @@ module.exports.logger = function (req, res, next) {
     next();
 };
 
-module.exports.errorLogger = function (err, req, res, next) {
+module.exports.errorLogger = function(err, req, res, next) {
     var _start = new Date();
 
     // I feel really disgusted doing this. Can't waith to switch to Koa...
     var end = res.end;
-    res.end = function (chunk, encoding) {
-        var responseTime = new Date() - _start;
+    res.end = function(chunk, encoding) {
+        var responseTime = (new Date() - _start);
 
         res.end = end;
         res.end(chunk, encoding);

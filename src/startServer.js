@@ -12,10 +12,10 @@ var logger = require('./logger');
 
 var workersStarted = 0;
 
-var startServer = function startServer(done, app, options) {
+var startServer = function(done, app, options) {
     var server = options.server;
     var h;
-    if (typeof server.listen === 'undefined' || server.listen !== false) {
+    if(typeof server.listen === 'undefined' || server.listen !== false){
         if (server.cluster) {
             if (cluster.isMaster) {
                 // Fork workers.
@@ -23,7 +23,7 @@ var startServer = function startServer(done, app, options) {
                     cluster.fork();
                 }
 
-                cluster.on('fork', function () {
+                cluster.on('fork', function() {
                     workersStarted += 1;
 
                     if (workersStarted === numCPUs) {
@@ -31,20 +31,23 @@ var startServer = function startServer(done, app, options) {
                     }
                 });
 
-                cluster.on('exit', function (worker, code, signal) {
+                cluster.on('exit', function(worker, code, signal) {
                     logger.error('worker ' + worker.process.pid + ' died');
                 });
-            } else {
+            }
+            else {
                 // Workers can share any TCP connection
                 // In this case its a HTTP server
-                h = http.createServer(app).listen(server.port);
+                h = http.createServer(app)
+                    .listen(server.port);
 
                 logger.success('Started worker   pid: ' + cluster.worker.process.pid);
             }
-        } else {
+        }
+        else {
             h = http.createServer(app);
             h.listen(server.port, function () {
-                logger.success('Started at http://localhost:' + h.address().port + ' (single core)');
+                logger.success('Started at http://localhost:' + h.address().port + ' (single core)');            
             });
         }
     }
@@ -52,7 +55,7 @@ var startServer = function startServer(done, app, options) {
     if (wsRouter.hasRoutes()) {
         var p = new Primus(h, { transformer: 'sockjs' });
 
-        var _path = options['static'];
+        var _path = options.static;
 
         if (!_path.endsWith('/')) {
             _path += '/';
@@ -68,8 +71,8 @@ var startServer = function startServer(done, app, options) {
             });
         });
     }
-
-    return done(null, { primus: p });
+    
+    return done(null, {primus: p});
 };
 
 module.exports = startServer;

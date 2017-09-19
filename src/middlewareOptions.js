@@ -1,5 +1,3 @@
-'use strict';
-
 var _ = require('lodash');
 var logger = require('./logger');
 
@@ -21,7 +19,9 @@ var defaultOptions = {
         disableAndroid: true, // set to true if you want to disable Android (browsers can vary and be buggy)
         safari5: false // set to true if you want to force buggy CSP in Safari 5
     },
-    frameguard: ["SAMEORIGIN"],
+    frameguard : [
+        "SAMEORIGIN"
+    ],
     hsts: {
         maxAge: 7776000000,
         includeSubdomains: true
@@ -47,7 +47,7 @@ var defaultOptions = {
     },
     multer: {
         dest: './tmp/uploads/',
-        rename: function rename(fieldname, filename) {
+        rename: function (fieldname, filename) {
             return fieldname + "_" + filename.replace(/\W+/g, '-').toLowerCase() + Date.now();
         }
     },
