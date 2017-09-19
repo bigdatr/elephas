@@ -1,7 +1,6 @@
 'use strict';
 
-var bodyParser = require('body-parser'),
-    cookieParser = require('cookie-parser'),
+var cookieParser = require('cookie-parser'),
     flash = require('express-flash'),
     helmet = require('helmet'),
     compression = require('compression'),
@@ -41,6 +40,7 @@ module.exports = function(done, app, options) {
     }
     var _bodyParserOptions = middlewareOptions('bodyParser', options);
     if (options.bodyParser !== false) {
+        var bodyParser = require('body-parser');
         app.use(bodyParser.json(_bodyParserOptions.json));
         app.use(bodyParser.urlencoded(_bodyParserOptions.urlencoded));
     }
