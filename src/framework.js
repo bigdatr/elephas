@@ -8,6 +8,7 @@ var express = require('express'),
 
 var _statsd = require('./statsd');
 
+
 var services = require('./services'),
     middleware = require('./middleware'),
     routes = require('./routes'),
@@ -36,7 +37,7 @@ function _addStatsD(options, app) {
 
         new StatsD(options);
 
-        app.use('/api', function (req, res, next) {
+        app.use('/api', function(req, res, next) {
             statsd_client.increment('api.request');
             next();
         });
@@ -47,12 +48,13 @@ function _addStatsD(options, app) {
 
 function _HttpsOnly(options, app) {
     if (options) {
-        app.use(function (req, res, next) {
+        app.use(function(req, res, next) {
             var proto = req.headers['x-forwarded-proto'] || req.protocol;
 
             if (!proto || proto === 'https') {
                 next();
-            } else {
+            }
+            else {
                 return res.redirect('https://' + req.headers.host + req.url);
             }
         });
@@ -63,7 +65,7 @@ function _HttpsOnly(options, app) {
 
 function _ping(options, app) {
     if (options) {
-        app.use('/ping', function (req, res) {
+        app.use('/ping', function(req, res) {
             res.end('200 Service Available');
         });
     }
@@ -75,11 +77,13 @@ function elephas(options) {
 
     logger.transports.console.level = options.logger.level || 'debug';
 
+
     if (options.__dirname) {
         options.routes_root_path = options.routes_root_path || options.__dirname;
         options.services_root_path = options.services_root_path || options.__dirname;
         options.static_root_path = options.static_root_path || options.__dirname + '/public';
-    } else {
+    }
+    else {
         logger.error('Require option `__dirname` in elephas config');
         process.exit(1);
     }
@@ -91,83 +95,63 @@ function elephas(options) {
     _HttpsOnly(options.httpsOnly, app);
 
     function _toTask(fn) {
-        return function (done) {
+        return function(done) {
             fn(done, app);
         };
     }
 
     return {
-        app: app,
-        createServer: function createServer(hooks) {
+        app: app, 
+        createServer: function(hooks) {
             hooks = hooks || {};
             var timerResults = [];
 
-            var timerTask = function timerTask(taskName) {
-                return function (done) {
-                    timerResults.push({ task: taskName, completed: new Date() });
+            var timerTask = function(taskName) {
+                return function(done) {
+                    timerResults.push({task: taskName, completed: new Date()});
                     return done();
                 };
             };
 
+
             var tasks = [];
 
             // SERVICES
-            if (hooks.beforeServices) {
-                tasks.push(_toTask(hooks.beforeServices));
-            }
+            if (hooks.beforeServices) { tasks.push(_toTask(hooks.beforeServices)); }
             tasks.push(timerTask('beforeServices'));
-            tasks.push(function (done) {
-                services(done, options.services_root_path);
-            });
+            tasks.push(function(done) { services(done, options.services_root_path); });
             tasks.push(timerTask('services'));
 
             // MIDDLEWARE
-            if (hooks.beforeMiddleware) {
-                tasks.push(_toTask(hooks.beforeMiddleware));
-            }
+            if (hooks.beforeMiddleware) { tasks.push(_toTask(hooks.beforeMiddleware)); }
             tasks.push(timerTask('beforeMiddleware'));
-            tasks.push(function (done) {
-                middleware(done, app, options, options.redisClient);
-            });
+            tasks.push(function(done) { middleware(done, app, options, options.redisClient); });
             tasks.push(timerTask('middleware'));
 
             // ROUTES
-            if (hooks.beforeRoutes) {
-                tasks.push(_toTask(hooks.beforeRoutes));
-            }
+            if (hooks.beforeRoutes) { tasks.push(_toTask(hooks.beforeRoutes)); }
             tasks.push(timerTask('beforeRoutes'));
-            tasks.push(function (done) {
-                routes(done, app, options.routes_root_path);
-            });
+            tasks.push(function(done) { routes(done, app, options.routes_root_path); });
             tasks.push(timerTask('routes'));
 
-            tasks.push(function (done) {
-                wsRoutes(done, app, options.routes_root_path);
-            });
+            tasks.push(function(done) { wsRoutes(done, app, options.routes_root_path); });
             tasks.push(timerTask('wsRoutes'));
 
-            tasks.push(function (done) {
-                postRouteMiddleware(done, app, options.static_root_path);
-            });
+            tasks.push(function(done) { postRouteMiddleware(done, app, options.static_root_path); });
             tasks.push(timerTask('postRouteMiddleware'));
-            if (hooks.afterRoutes) {
-                tasks.push(_toTask(hooks.afterRoutes));
-            }
+            if (hooks.afterRoutes) { tasks.push(_toTask(hooks.afterRoutes)); }
             tasks.push(timerTask('afterRoutes'));
 
+
             // START SERVER
-            tasks.push(function (done) {
-                startServer(done, app, options);
-            });
+            tasks.push(function(done) { startServer(done, app, options); });
             tasks.push(timerTask('startServer'));
 
             _statsd.increment('elephas.starting');
             var _startTime = new Date();
 
-            async.series(tasks, function (err, payload) {
-                if (err) {
-                    throw err;
-                }
+            async.series(tasks, function(err, payload) {
+                if (err) { throw err; }
 
                 var _startServerPayload = payload[payload.length - 2];
 
@@ -179,16 +163,17 @@ function elephas(options) {
 
                 _statsd.timing('elephas.startup_time', _duration);
 
+
                 logger.debug('NODE_ENV: ' + process.env.NODE_ENV);
 
-                timerResults.forEach(function (t, i) {
-                    var _start = i === 0 ? _startTime : timerResults[i - 1].completed;
+                timerResults.forEach(function(t, i) {
+                    var _start = i === 0 ? _startTime : timerResults[i-1].completed;
                     var _duration = t.completed - _start;
                     logger.debug(_duration + 'ms', Array(8 - _duration.toString().length).join(' '), t.task);
                 });
 
                 logger.debug('=================================');
-                logger.debug(_duration + 'ms', Array(8 - _duration.toString().length).join(' '), 'TOTAL STARTUP DURATION');
+                logger.debug(_duration + 'ms', Array(8 - _duration.toString().length).join(' '), 'TOTAL STARTUP DURATION')
             });
         }
     };

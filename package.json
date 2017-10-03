@@ -4,6 +4,7 @@
   "description": "Some added sugar on top of express to give our our some sensible defaults and a little structure.",
   "main": "elephas.js",
   "scripts": {
+    "build": "rm -rf lib && NODE_ENV=production babel src --out-dir lib",
     "test": "grunt test",
     "test:watch": "npm run test -- --watch"
   },

@@ -10,14 +10,14 @@ var timeout = require('connect-timeout');
 var middlewareOptions = require('./middlewareOptions');
 // var logger = require('./logger');
 
-module.exports = function (done, app, options) {
+module.exports = function(done, app, options) {
     app.use(expressLogger.logger);
     app.use(expressLogger.errorLogger);
 
     if (options.csp !== false) {
         app.use(helmet.contentSecurityPolicy(middlewareOptions('csp', options)));
     }
-    if (options.frameguard !== false) {
+    if(options.frameguard !== false){
         app.use(helmet.frameguard.apply(this, middlewareOptions('frameguard', options)));
     }
     app.use(helmet.xssFilter());
@@ -27,13 +27,13 @@ module.exports = function (done, app, options) {
     app.use(helmet.ieNoOpen());
 
     app.use(cookieParser());
-    if (options.session !== false) {
+    if(options.session !== false ){
         var session = require('express-session');
         var _sessionOptions = middlewareOptions('session', options);
         _sessionOptions.store = _sessionOptions.store;
         if (!_sessionOptions.store && options.redisClient) {
             var RedisStore = require('connect-redis')(session);
-            _sessionOptions.store = new RedisStore({ client: options.redisClient, ttl: 60 * 60 });
+            _sessionOptions.store = new RedisStore({client: options.redisClient, ttl: 60 * 60});
         }
         app.use(session(_sessionOptions));
         app.use(flash());
@@ -46,11 +46,11 @@ module.exports = function (done, app, options) {
     }
 
     app.use(flash());
-    if (typeof options.multer !== 'undefined' && options.multer.disable !== true) {
-        var multer = require('multer');
+    if(typeof options.multer !== 'undefined' && options.multer.disable !== true){
+        var multer  = require('multer');
         app.use(multer(middlewareOptions('multer', options)));
     }
-    if (typeof options.compression !== 'undefined' && options.compression.disable !== true) {
+    if(typeof options.compression !== 'undefined' && options.compression.disable !== true){
         app.use(compression(middlewareOptions('compression', options)));
     }
     app.use(timeout(middlewareOptions('timeout', options).ms));
